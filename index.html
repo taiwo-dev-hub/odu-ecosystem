@@ -3,226 +3,793 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odufuwa Taiwo | Creative Ecosystem</title>
+    <title>Odufuwa Taiwo | Premium AI Video Production</title>
+    
+    <!-- Google Fonts: Syne for premium headings, Inter for readable body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* CSS VARIABLES - Premium Color Palette */
         :root {
-            --primary-navy: #0A2463;
-            --accent-red: #D90429;
-            --white: #FFFFFF;
-            --light-gray: #f4f4f9;
+            --bg-gradient: linear-gradient(135deg, #0A2EA8, #123EDB);
+            --bg-navy: #071B5A;
+            --accent-lime: #D9FF57;
+            --text-white: #FFFFFF;
+            --text-gray: #D9DCE6;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --border-radius: 20px;
+            --font-head: 'Syne', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Custom cursor implementation */
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Georgia', serif;
-            background-color: var(--primary-navy);
-            color: var(--white);
+            background: var(--bg-navy);
+            background-image: var(--bg-gradient);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* BACKGROUND FIX APPLIED HERE */
-        body {
-            background-image: linear-gradient(rgba(10, 36, 99, 0.85), rgba(10, 36, 99, 0.95)), url('your-image-name.jpg');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+        a {
+            text-decoration: none;
+            color: var(--text-white);
+            transition: color 0.3s ease;
         }
 
-        /* ENTRANCE GATE WITH BACKGROUND FIX */
-        #entrance-gate {
+        ul {
+            list-style: none;
+        }
+
+        /* CUSTOM CURSOR */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-lime);
+            border-radius: 50%;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--primary-navy);
-            background-image: linear-gradient(rgba(10, 36, 99, 0.3), rgba(10, 36, 99, 0.7)), url('your-image-name.jpg');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            pointer-events: none;
+            transition: transform 0.1s ease;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(217, 255, 87, 0.5);
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 9998;
+            pointer-events: none;
+            transition: transform 0.15s ease, width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* PRELOADER */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg-navy);
+            z-index: 10000;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
             transition: opacity 1s ease;
-            text-align: center;
         }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent-lime);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        #entrance-gate h1 { font-size: 4rem; margin-bottom: 10px; }
-        .subtitle { font-style: italic; font-size: 1.5rem; color: var(--accent-red); margin-bottom: 20px; }
-        
-        .launch-btn {
-            padding: 15px 40px;
-            border: 1px solid var(--accent-red);
-            color: var(--accent-red);
-            background: transparent;
-            cursor: pointer;
-            font-size: 1.2rem;
+        /* NAVIGATION (Glassmorphism) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 27, 90, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+        .logo {
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        .logo span {
+            color: var(--accent-lime);
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-size: 0.9rem;
             text-transform: uppercase;
-            transition: 0.3s;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: var(--accent-lime);
         }
 
-        .launch-btn:hover {
-            background: var(--accent-red);
-            color: var(--white);
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-family: var(--font-head);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: var(--accent-lime);
+            color: var(--bg-navy);
+            border: none;
+            box-shadow: 0 10px 20px rgba(217, 255, 87, 0.2);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(217, 255, 87, 0.4);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            border: 1px solid var(--glass-border);
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent-lime);
+            color: var(--accent-lime);
         }
 
-        /* MAIN PORTFOLIO CONTENT */
-        #main-content {
-            display: none; /* Hidden until Launch is clicked */
-            padding: 50px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: var(--font-head);
         }
-
-        header {
-            text-align: center;
-            padding-bottom: 50px;
-            border-bottom: 2px solid var(--accent-red);
-            margin-bottom: 50px;
+        .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.1;
         }
-
-        header h2 {
-            font-size: 3rem;
-            margin: 0;
+        .section-subtitle {
+            color: var(--accent-lime);
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
         }
-
-        section {
-            margin-bottom: 60px;
-            background: rgba(10, 36, 99, 0.7);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        h3 {
-            color: var(--accent-red);
-            font-size: 2rem;
-            margin-top: 0;
-            border-bottom: 1px solid var(--accent-red);
-            padding-bottom: 10px;
-        }
-
         p {
-            line-height: 1.6;
+            color: var(--text-gray);
+            line-height: 1.7;
             font-size: 1.1rem;
         }
 
-        /* GRID LAYOUT FOR CAPABILITIES AND MISSION FILES */
-        .grid-container {
+        /* SECTION PADDING */
+        section {
+            padding: 120px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HERO SECTION */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 100px;
+        }
+        .hero-content {
+            flex: 1;
+            padding-right: 50px;
+            z-index: 2;
+        }
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+        }
+        .hero-visual {
+            flex: 1;
+            position: relative;
+        }
+        .video-placeholder {
+            width: 100%;
+            height: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(217, 255, 87, 0.1) 0%, transparent 50%);
+            animation: pulse 8s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-lime);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--bg-navy);
+            font-size: 1.5rem;
+            z-index: 2;
+            padding-left: 5px; /* Visual center for play icon */
+        }
+
+        /* PORTFOLIO SECTION */
+        #portfolio {
+            background: var(--bg-navy);
+            border-radius: 40px;
+            margin-top: -50px;
+            padding-top: 100px;
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.2);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        .portfolio-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            height: 450px;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(217, 255, 87, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .card-image {
+            height: 60%;
+            background: #1a1a1a; /* Replace with your image via inline style later */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .card-content {
+            padding: 30px;
+            height: 40%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .card-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .card-industry {
+            color: var(--accent-lime);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ai-tools {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+        .hover-btn {
+            position: absolute;
+            bottom: -50px;
+            right: 30px;
+            background: var(--accent-lime);
+            color: var(--bg-navy);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: 0.3s;
+            opacity: 0;
+        }
+        .portfolio-card:hover .hover-btn {
+            bottom: 30px;
+            opacity: 1;
+        }
+
+        /* SERVICES SECTION */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .service-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            transition: 0.3s;
+        }
+        .service-card:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--accent-lime);
+        }
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--accent-lime);
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* ABOUT SECTION */
+        #about {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+        .about-image {
+            flex: 1;
+            height: 600px;
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--glass-border);
+            /* This is where your portrait will go */
+            background-image: url('your-image-name.jpg');
+            background-size: cover;
+            background-position: center top; 
+        }
+        .about-text {
+            flex: 1;
+        }
+        .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 40px;
+        }
+        .stat-box {
+            border-left: 2px solid var(--accent-lime);
+            padding-left: 20px;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-head);
+            color: var(--accent-lime);
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-left: 4px solid var(--accent-red);
-            border-radius: 4px;
+        /* TESTIMONIALS */
+        .testimonial-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            text-align: center;
+            position: relative;
+            margin-top: 60px;
         }
-
-        .card h4 {
-            margin-top: 0;
-            font-size: 1.3rem;
-            color: var(--white);
+        .quote-icon {
+            color: var(--accent-lime);
+            font-size: 3rem;
+            opacity: 0.3;
+            position: absolute;
+            top: 30px;
+            left: 40px;
+        }
+        .testimonial-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
         }
 
         /* CONTACT SECTION */
-        .contact-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background-color: var(--accent-red);
-            color: var(--white);
-            text-decoration: none;
+        #contact {
+            text-align: center;
+            padding-bottom: 150px;
+        }
+        .contact-box {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .contact-link {
             font-size: 1.2rem;
-            border-radius: 4px;
-            transition: background 0.3s;
+            font-weight: bold;
+        }
+        .contact-link i {
+            color: var(--accent-lime);
+            margin-right: 10px;
         }
 
-        .contact-btn:hover {
-            background-color: #b00320;
+        /* FADE UP ANIMATION CLASSES */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .hero-content h1 { font-size: 4rem; }
+            #home { flex-direction: column; text-align: center; padding-top: 150px; }
+            .hero-content { padding-right: 0; margin-bottom: 60px; }
+            .hero-btns { justify-content: center; }
+            #about { flex-direction: column; }
+        }
         @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
-            #entrance-gate h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Mobile menu needed for production */
+            .section-title { font-size: 2.5rem; }
+            .hero-content h1 { font-size: 3rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- HERO GATE -->
-    <div id="entrance-gate">
-        <div class="subtitle">Welcome to my ecosystem</div>
-        <h1>ODUFUWA TAIWO</h1>
-        <button class="launch-btn" onclick="revealContent()">LAUNCH</button>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- PRELOADER -->
+    <div id="loader">
+        <div class="spinner"></div>
     </div>
 
-    <!-- MAIN PORTFOLIO -->
-    <div id="main-content">
-        <header>
-            <h2>ODUFUWA TAIWO</h2>
-            <p class="subtitle" style="margin-top: 10px;">AI Automation & Video Creation Specialist</p>
-        </header>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">ODUFUWA<span>.AI</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#portfolio">Work</a></li>
+            <li><a href="#services">Capabilities</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-        <section id="capabilities">
-            <h3>Capabilities</h3>
-            <p>Deploying advanced AI systems and compelling video narratives to solve complex problems and drive engagement.</p>
-            <div class="grid-container">
-                <div class="card">
-                    <h4>AI Automation</h4>
-                    <p>Streamlining workflows, building intelligent chatbots, and automating repetitive tasks to save time and scale operations efficiently.</p>
+    <!-- HERO SECTION -->
+    <section id="home">
+        <div class="hero-content reveal">
+            <span class="section-subtitle">Cinematic Output. Scalable Infrastructure.</span>
+            <h1>I Create AI Videos That People Can't Ignore.</h1>
+            <p>I am a digital architect specializing in high-end AI commercials, dynamic social media ads, and cinematic storytelling. Using advanced models to turn creative visions into measurable business results.</p>
+            <div class="hero-btns">
+                <a href="#portfolio" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+            </div>
+        </div>
+        <div class="hero-visual reveal">
+            <div class="video-placeholder">
+                <div class="play-btn"><i class="fas fa-play"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio">
+        <span class="section-subtitle reveal">Selected Works</span>
+        <h2 class="section-title reveal">Premium Case Studies</h2>
+        
+        <div class="portfolio-grid">
+            
+            <!-- Video 1: Food/Drink Thirst Trap -->
+            <div class="portfolio-card reveal">
+                <!-- Replace background color with thumbnail image later -->
+                <div class="card-image" style="background-color: #1a1a1a;">
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; opacity:0.5;"><i class="fas fa-play-circle fa-3x"></i></div>
                 </div>
-                <div class="card">
-                    <h4>Video Creation</h4>
-                    <p>Crafting high-retention, visually striking video content tailored for modern digital platforms and marketing campaigns.</p>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div>
+                            <span class="card-industry">Food & Beverage Ad</span>
+                            <h3>Sensory Motion Campaign</h3>
+                        </div>
+                    </div>
+                    <p>High-energy visual transitions and liquid physics engineered to maximize viewer retention for hospitality brands.</p>
+                    <div class="card-details">
+                        <span class="ai-tools">Veo • Runway • Midjourney</span>
+                    </div>
+                </div>
+                <a href="#" class="hover-btn">Watch Video <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <!-- Video 2: Authentic UGC -->
+            <div class="portfolio-card reveal">
+                <div class="card-image" style="background-color: #2a2a2a;">
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; opacity:0.5;"><i class="fas fa-play-circle fa-3x"></i></div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div>
+                            <span class="card-industry">Consumer Marketing</span>
+                            <h3>Authentic AI UGC</h3>
+                        </div>
+                    </div>
+                    <p>Relatable, front-facing camera aesthetics generating native feed integration and high conversion rates.</p>
+                    <div class="card-details">
+                        <span class="ai-tools">Gemini Omni • Custom Workflows</span>
+                    </div>
+                </div>
+                <a href="#" class="hover-btn">Watch Video <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <!-- Video 3: Cinematic Thriller -->
+            <div class="portfolio-card reveal">
+                <div class="card-image" style="background-color: #111;">
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; opacity:0.5;"><i class="fas fa-play-circle fa-3x"></i></div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div>
+                            <span class="card-industry">Cinematic Trailer</span>
+                            <h3>The Rogue Operative</h3>
+                        </div>
+                    </div>
+                    <p>Dark, moody, high-tension storytelling demonstrating absolute technical control over complex lighting and character consistency.</p>
+                    <div class="card-details">
+                        <span class="ai-tools">Sora • ElevenLabs</span>
+                    </div>
+                </div>
+                <a href="#" class="hover-btn">Watch Video <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <!-- Video 4: Luxury Commercial -->
+            <div class="portfolio-card reveal">
+                <div class="card-image" style="background-color: #222;">
+                    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:white; opacity:0.5;"><i class="fas fa-play-circle fa-3x"></i></div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <div>
+                            <span class="card-industry">Luxury Real Estate</span>
+                            <h3>Hyper-Realistic Property Showcase</h3>
+                        </div>
+                    </div>
+                    <p>Clean, sweeping, elegant visuals proving the ability to maintain brand luxury and consistency for high-ticket clients.</p>
+                    <div class="card-details">
+                        <span class="ai-tools">Veo • Magnific</span>
+                    </div>
+                </div>
+                <a href="#" class="hover-btn">Watch Video <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services">
+        <span class="section-subtitle reveal">Core Competencies</span>
+        <h2 class="section-title reveal">Production Capabilities</h2>
+        
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <i class="fas fa-film service-icon"></i>
+                <h3>AI Commercials</h3>
+                <p>Broadcast-quality promotional content engineered from scratch. High-fidelity rendering tailored for global brand standards.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-mobile-alt service-icon"></i>
+                <h3>AI Social Media Ads</h3>
+                <p>Scroll-stopping short-form content. Fast pacing, dynamic transitions, and built-in hooks optimized for TikTok and Reels.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-box-open service-icon"></i>
+                <h3>AI Product Videos</h3>
+                <p>Macro-level detailing and perfect physics emulation to make your physical products look irresistible on screen.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-video service-icon"></i>
+                <h3>Cinematic Storytelling</h3>
+                <p>Long-form narrative films featuring consistent characters, advanced lighting logic, and Hollywood-level storyboarding.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-chalkboard-teacher service-icon"></i>
+                <h3>Explainer Videos</h3>
+                <p>Turning complex concepts, educational material, or technical specs into visually engaging, high-retention media.</p>
+            </div>
+            <div class="service-card reveal">
+                <i class="fas fa-sync-alt service-icon"></i>
+                <h3>Content Repurposing</h3>
+                <p>Using AI to dissect long-form podcasts or keynotes into dozens of hyper-edited viral clips automatically.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about">
+        <div class="about-image reveal"></div>
+        <div class="about-text reveal">
+            <span class="section-subtitle">The Architect</span>
+            <h2 class="section-title">Odufuwa Taiwo</h2>
+            <p>I don't just generate images; I engineer business solutions. My focus is entirely on utilizing the absolute bleeding edge of artificial intelligence to solve creative and administrative bottlenecks for brands.</p>
+            <br>
+            <p>Whether it is producing a hyper-realistic commercial that slashes your production budget by 90%, or designing the automated workflows that handle the traffic those videos generate, I build infrastructure that scales.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div>AI Native Pipeline</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">4K</div>
+                    <div>Cinematic Output</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="mission-files">
-            <h3>Mission Files (Projects)</h3>
-            <div class="grid-container">
-                <div class="card">
-                    <h4>Project Alpha: AI Workflow</h4>
-                    <p>[Description of a specific AI automation project you completed, the problem it solved, and the results.]</p>
-                </div>
-                <div class="card">
-                    <h4>Project Beta: Video Campaign</h4>
-                    <p>[Description of a successful video creation project, the target audience, and the engagement metrics achieved.]</p>
-                </div>
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <span class="section-subtitle reveal">Initiate Protocol</span>
+        <h2 class="section-title reveal">Let's Build Something Extraordinary.</h2>
+        
+        <div class="contact-box reveal">
+            <p>Ready to upgrade your brand's visual identity? Reach out directly to discuss timelines, capabilities, and custom AI production pipelines.</p>
+            
+            <div class="contact-info">
+                <a href="mailto:taiwoodufuwa7@gmail.com" class="contact-link">
+                    <i class="fas fa-envelope"></i> taiwoodufuwa7@gmail.com
+                </a>
+                <a href="tel:09161803867" class="contact-link">
+                    <i class="fas fa-phone"></i> 09161803867
+                </a>
             </div>
-        </section>
+            
+            <div style="margin-top: 40px; display: flex; justify-content: center; gap: 20px;">
+                <a href="#" class="btn btn-secondary"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="#" class="btn btn-secondary"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="#" class="btn btn-secondary"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+    </section>
 
-        <section id="contact" style="text-align: center;">
-            <h3>Initiate Contact</h3>
-            <p>Ready to build something exceptional? Let's connect and discuss your next project.</p>
-            <a href="mailto:your.email@example.com" class="contact-btn">Send a Message</a>
-        </section>
-    </div>
-
+    <!-- JAVASCRIPT FOR ANIMATIONS -->
     <script>
-        function revealContent() {
-            const gate = document.getElementById('entrance-gate');
-            const mainContent = document.getElementById('main-content');
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+        
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
             
-            // Fade out the gate
-            gate.style.opacity = '0';
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
             
-            // Wait for fade to finish, then hide gate and show content
+            // Adding a slight delay to the outline for a smooth trailing effect
             setTimeout(() => {
-                gate.style.display = 'none';
-                mainContent.style.display = 'block';
+                cursorOutline.style.left = `${posX}px`;
+                cursorOutline.style.top = `${posY}px`;
+            }, 50);
+        });
+
+        // Hover effect for links and buttons
+        const interactables = document.querySelectorAll('a, button');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(217, 255, 87, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Remove Loader
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
             }, 1000);
+        });
+
+        // Scroll Reveal Animation (Intersection Observer)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
         }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on initial load
     </script>
 </body>
 </html>
