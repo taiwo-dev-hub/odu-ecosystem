@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odufuwa Taiwo | Creative Ecosystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Imperial+Script&family=Playfair+Display:wght@700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0A2463; 
+            --surface-glass: rgba(10, 36, 99, 0.4); 
+            --accent-red: #E63946; 
+            --text-bright: #FFFFFF; 
+            --text-muted: #E0E6ED; 
+            
+            /* Applied your new font choices */
+            --font-heading: 'Playfair Display', serif;
+            --font-accent: 'Imperial Script', cursive;
+            --font-body: 'Raleway', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            /* REMINDER: Replace 'your-image-name.jpg' with your filename */
+            background-image: linear-gradient(rgba(10, 36, 99, 0.6), rgba(10, 36, 99, 0.85)), url('your-image-name.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--primary-navy);
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ENTRANCE GATE */
+        #entrance-gate {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999;
+            background-image: linear-gradient(rgba(10, 36, 99, 0.3), rgba(10, 36, 99, 0.7)), url('your-image-name.jpg');
+            background-size: cover; background-position: center;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+        }
+
+        /* Using the script font here for that elegant welcome */
+        .gate-welcome { font-family: var(--font-accent); font-size: 4rem; color: var(--accent-red); margin-bottom: 0px; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+        .gate-name { font-family: var(--font-heading); font-size: 6rem; color: var(--text-bright); text-transform: uppercase; margin-bottom: 50px; }
+        
+        .btn-enter {
+            padding: 15px 50px; background: transparent; border: 1px solid var(--accent-red);
+            color: var(--accent-red); font-family: var(--font-body); font-size: 1.2rem;
+            text-transform: uppercase; letter-spacing: 3px; cursor: pointer; transition: all 0.4s ease;
+        }
+        .btn-enter:hover { background: var(--accent-red); color: var(--text-bright); }
+
+        /* PORTFOLIO STYLING */
+        #main-portfolio { opacity: 0; visibility: hidden; transition: opacity 1s ease-in-out 0.3s; display: flex; min-height: 100vh; }
+        .left-panel { width: 35%; position: fixed; height: 100vh; padding: 60px 50px; background: rgba(10, 36, 99, 0.95); backdrop-filter: blur(12px); border-right: 1px solid var(--accent-red); }
+        .brand-name { font-family: var(--font-heading); font-size: 4rem; color: var(--text-bright); line-height: 1; margin-bottom: 10px; text-transform: uppercase; }
+        .brand-title { font-size: 1rem; color: var(--accent-red); letter-spacing: 3px; margin-bottom: 60px; }
+        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 25px; }
+        .nav-menu a { text-decoration: none; color: var(--text-bright); font-size: 1.2rem; }
+        
+        .right-panel { width: 65%; margin-left: 35%; padding: 80px 10%; }
+        .section-header { font-family: var(--font-accent); font-size: 4rem; color: var(--accent-red); margin-bottom: 30px; }
+        .intro-text { font-size: 1.25rem; margin-bottom: 80px; color: var(--text-bright); }
+        .card { background: var(--surface-glass); border: 1px solid rgba(255, 255, 255, 0.15); padding: 40px; margin-bottom: 30px; }
+        
+        /* MOBILE */
+        @media (max-width: 1024px) {
+            #main-portfolio { flex-direction: column; }
+            .left-panel { width: 100%; position: relative; height: auto; }
+            .right-panel { width: 100%; margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="entrance-gate">
+        <p class="gate-welcome">Welcome to my ecosystem</p>
+        <h1 class="gate-name">Odufuwa Taiwo</h1>
+        <button class="btn-enter" onclick="unlockEcosystem()">Launch</button>
+    </div>
+
+    <div id="main-portfolio">
+        <div class="left-panel">
+            <h1 class="brand-name">Odufuwa<br>Taiwo</h1>
+            <h2 class="brand-title">AI Video Creator | Automation Architect</h2>
+            <ul class="nav-menu">
+                <li><a href="#ecosystem">Intro</a></li>
+                <li><a href="#mission-files">Mission Files</a></li>
+                <li><a href="#capabilities">Capabilities</a></li>
+            </ul>
+        </div>
+        <div class="right-panel">
+            <section id="ecosystem">
+                <h2 class="section-header">System Online</h2>
+                <p class="intro-text">
+                    I am the architect of hyper-realistic visuals and autonomous systems. 
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function unlockEcosystem() {
+            document.getElementById('entrance-gate').style.opacity = '0';
+            document.getElementById('entrance-gate').style.visibility = 'hidden';
+            document.getElementById('main-portfolio').style.opacity = '1';
+            document.getElementById('main-portfolio').style.visibility = 'visible';
+        }
+    </script>
+</body>
+</html>
